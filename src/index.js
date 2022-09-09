@@ -1,7 +1,8 @@
 const express = require('express');
+var cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-const { OAuth2Client } = require('google-auth-library');
+
 const hbs = require('express-handlebars');
 
 const routes = require('./routes/user.js');
@@ -12,21 +13,9 @@ dotenv.config();
 db.connect();
 
 let app = express();
+app.use(cors());
 
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', process.env.URL_FE);
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
-// app.use(function (req, res, next) {
-//     res.setHeader('Access-Control-Allow-Origin', process.env.URL_FED);
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-//     res.setHeader('Access-Control-Allow-Credentials', true);
-//     next();
-// });
+app.options('*', cors());
 
 app.engine(
     'hbs',
