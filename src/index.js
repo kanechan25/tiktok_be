@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 const path = require('path');
 const { OAuth2Client } = require('google-auth-library');
 const hbs = require('express-handlebars');
-const logger = require('morgan');
 
 const routes = require('./routes/user.js');
 const db = require('./config/db/index.js');
@@ -13,9 +12,7 @@ dotenv.config();
 db.connect();
 
 let app = express();
-app.use(logger('dev'));
-// fix CORS error_Method_2
-// Add headers before the routes are defined
+
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', process.env.URL_FE);
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
